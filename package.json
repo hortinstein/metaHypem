@@ -1,0 +1,18 @@
+{
+  "name": "application-name",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node app"
+  },
+  "dependencies": {
+    "express": "3.0.0",
+    "jade": "*",
+    "stylus": "*",
+    "socket.io":"*",
+    "coffee-script": "~1.4.0",
+    "hypemParser": "git+ssh://git@github.com:hortinstein/hypemParser.git#master"
+
+  }
+
+}

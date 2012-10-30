@@ -2,23 +2,12 @@ extends layout
 
 
 block append head-scripts
-  script(src='/javascripts/songctrl.js')
-  script(src='/javascripts/searchctrl.js')
-  script(src='/javascripts/app.js')
-  script(src='/socket.io/socket.io.js')
+  script(src='/javascripts/main.js')
+
 block content
   .row
+    .span3
     .span8
-      h2= title
-
-      div(ng-controller="SearchCtrl")
-        form#song-search.form-search(ng:submit="search(query)")
-          .input-append
-            input(name="query", type="text", ng-model="query", class="span4 search-query", placeholder="Search")
-            button.btn(type="submit") Search
+      p Welcome to our downloading site! Please search for any song and we will try to give you links to download from!
 
 
-      a(href="search?qs=test") Lookup
-
-      div(ng-view)
-        p TEST TEST TEST 

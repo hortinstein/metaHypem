@@ -3,7 +3,7 @@
  * Module dependencies.
  */
 require('coffee-script');
-hypem_parser = require('hypemParser');
+hypem_parser = require('hypemParser/hypemscraper');
 
 
 var express = require('express')
@@ -19,7 +19,6 @@ var express = require('express')
 
 var app = express();
 var server = http.createServer(app);
-var io = require('socket.io').listen(server);
 
 app.configure(function(){
   app.set('port', process.env.PORT || 3000);

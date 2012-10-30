@@ -6,13 +6,8 @@
     "start": "node app"
   },
   "dependencies": {
-    "express": "3.0.0",
-    "jade": "*",
-    "stylus": "*",
-    "socket.io":"*",
+    "express": "~3.0.0",
     "coffee-script": "~1.4.0",
-    "hypemParser": "git+ssh://git@github.com:hortinstein/hypemParser.git#master"
-
+    "hypemParser": "*"
   }
-
 }

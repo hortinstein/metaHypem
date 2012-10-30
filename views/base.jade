@@ -27,7 +27,7 @@ html
             span.icon-bar
             span.icon-bar
             span.icon-bar
-          a.brand(href="#") MetaSongDownloader
+          a.brand(href="/") MetaSongDownloader
 
           .nav-collapse.collapse
             ul.nav
@@ -35,24 +35,24 @@ html
                 - each val, key in obj
                   - if (id == key)
                     li.active
-                       a(href='#') #{val}
+                       a(href='#{key}') #{val}
                   - else
                     li
-                      a(href='#') #{val}
+                      a(href='#{key}') #{val}
 
 
     .container
+      block search
+        .row
+          .span3
+          .span8
+            h2= title
 
-      .row
-        .span3
-        .span8
-          h2= title
-
-          div(ng-controller="SearchCtrl")
-            form#song-search.form-search(ng:submit="search(query)")
-              .input-append
-                input(name="query", type="text", ng-model="query", class="span4 search-query", placeholder="Search")
-                button.btn(type="submit") Search
+            div(ng-controller="SearchCtrl")
+              form#song-search.form-search(action="get", action="search")
+                .input-append
+                  input(name="query", type="text", class="span4 search-query", placeholder="Search")
+                  button.btn(type="submit") Search
 
 
       block content

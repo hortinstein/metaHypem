@@ -1,15 +1,12 @@
-
+require('coffee-script');
 /**
  * Module dependencies.
  */
-require('coffee-script');
-hypem_parser = require('hypemParser/hypemscraper');
-
-
 var express = require('express')
   , routes = {
     index: require('./routes/index').index,
-    partials: require('./routes/index').partials,
+    about: require('./routes/index').about,
+    download: require('./routes/index').download,
     search: require('./routes/index').search
   }
   , api = require('./routes/api')
@@ -40,8 +37,10 @@ app.configure('development', function(){
 });
 
 app.get('/', routes.index);
-app.get('/partials/:name', routes.partials)
-app.get('/search', routes.search)
+app.get('/home', routes.index);
+app.get('/about', routes.about);
+app.get('/search', routes.search);
+app.get('/download/:id', routes.download);
 app.get('/api/search', api.search);
 app.get('/users', user.list);
 

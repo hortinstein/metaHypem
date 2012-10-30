@@ -1,0 +1,23 @@
+extends base
+
+
+block content
+  .row
+    .span3
+    .span8
+      table.table.table-striped
+        thead
+          tr 
+            th #
+            th Title
+            th Artist
+            th Download
+        tbody
+          each song, i in songs
+            tr
+              td #{i}
+              td #{song.title}
+              td #{song.artist}
+              td 
+                a.btn(href="download/#{song.id}")
+                  i.icon-download-alt

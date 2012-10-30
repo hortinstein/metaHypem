@@ -5,6 +5,7 @@ require('coffee-script');
 var express = require('express')
   , routes = {
     index: require('./routes/index').index,
+    login: require('./routes/index').login,
     about: require('./routes/index').about,
     download: require('./routes/index').download,
     search: require('./routes/index').search
@@ -38,6 +39,7 @@ app.configure('development', function(){
 
 app.get('/', routes.index);
 app.get('/home', routes.index);
+app.get('/login', routes.login);
 app.get('/about', routes.about);
 app.get('/search', routes.search);
 app.get('/download/:id', routes.download);

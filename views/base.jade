@@ -13,6 +13,8 @@ html
 
     block head-scripts
       script(src="/javascripts/vendor/modernizr-2.6.1-respond-1.1.0.min.js")
+      //script(src='/javascripts/vendor/bootstrap-modal.js')
+      //script(src='/javascripts/vendor/bootstrap-transition.js')
       script(src="/javascripts/vendor/jquery-1.8.2.min.js")
       script(src="/javascripts/vendor/bootstrap.min.js")
       script(src="/javascripts/main.js")
@@ -31,7 +33,7 @@ html
 
           .nav-collapse.collapse
             ul.nav
-              - var obj = { 'home': 'Home', 'about': 'About' }
+              - var obj = { 'home': 'Home', 'about': 'About', 'login': 'Login' }
                 - each val, key in obj
                   - if (id == key)
                     li.active

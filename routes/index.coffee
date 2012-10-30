@@ -12,13 +12,18 @@ index = (req, res) ->
     title: 'Look for songs!'
   res.render 'index', options
 
-
 about = (req, res) ->
   options =
     id: 'about'
     title: 'About'
   res.render 'about', options
 
+login = (req, res) ->
+  options =
+    id: 'login'
+    title: 'Please Login!'
+  console.log('login')
+  res.render 'login', options
 
 search = (req, res) ->
 
@@ -31,7 +36,6 @@ search = (req, res) ->
       songs: valid_tracks
 
     res.render 'search', options
-
 
 download = (req, res) ->
   song_id = req.params.id
@@ -48,6 +52,7 @@ download = (req, res) ->
 
 
 exports.search = search
+exports.login = login
 exports.index = index
 exports.about = about
 exports.download = download

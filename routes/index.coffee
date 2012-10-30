@@ -1,6 +1,7 @@
 hypem_parser = require('hypemParser/hypemscraper');
 http = require('http')
 fs = require('fs')
+request = require('request')
 #
 #GET home page.
 #
@@ -34,21 +35,12 @@ search = (req, res) ->
 
 download = (req, res) ->
   song_id = req.params.id
-  hypem_parser.get_download_url song_id, 
-  (download_url)->
+  hypem_parser.get_download_url song_id, (download_url)->
     console.log("Returning download from: #{download_url}")
     
     res.set('Content-Type', 'audio/mpeg')
     res.set('Content-Disposition', 'attachment')
-
-    http.get(download_url, (response) ->
-      
-      res.set('Content-Length', response.headers['content-length'])
-      response.pipe(res)
-      ).on('error', (err) ->
-        console.error("Error")
-      )
-
+    request(download_url).pipe(res)
   (err)->
     console.error(err)
 

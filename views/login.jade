@@ -1,3 +1,15 @@
+script(src='/javascripts/login.js')
+
+
+include modals/alert
+include modals/lost-password
+
+script(src='/vendor/jquery.min.js')
+script(src='/vendor/jquery.form.js')
+script(src='/vendor/bootstrap-modal.js')
+script(src='/vendor/bootstrap-transition.js')
+
+
 extends base
 block search
 
@@ -6,7 +18,7 @@ block content
   .row
     .span2
     .span8
-        form.form-signin
+        form( method="post")#form-signin.well.span4
           h2.form-signin-heading Please Sign-in
           input(type="text",class="input-block-level",placeholder="Email address")
           input(type="password", class="input-block-level", placeholder="Password")
@@ -25,10 +37,3 @@ block content
 
 
     
-include modals/alert
-include modals/lost-password
-
-script(src='/vendor/jquery.min.js')
-script(src='/vendor/jquery.form.js')
-script(src='/vendor/bootstrap-modal.js')
-script(src='/vendor/bootstrap-transition.js')

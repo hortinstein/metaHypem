@@ -22,8 +22,14 @@ login = (req, res) ->
   options =
     id: 'login'
     title: 'Please Login!'
-  console.log('login')
   res.render 'login', options
+
+login_post = (req, res) ->
+  options =
+    id: 'login_post'
+    title: 'Please Login!'
+  console.log(req.params)
+  res.render "login", options
 
 search = (req, res) ->
 
@@ -36,6 +42,12 @@ search = (req, res) ->
       songs: valid_tracks
 
     res.render 'search', options
+
+signup = (req, res) ->
+  options =
+    id: 'signup'
+    title: 'Signup!'
+  res.render 'signup', options
 
 download = (req, res) ->
   song_id = req.params.id
@@ -52,7 +64,9 @@ download = (req, res) ->
 
 
 exports.search = search
+exports.signup = signup
 exports.login = login
+exports.login_post = login_post
 exports.index = index
 exports.about = about
 exports.download = download

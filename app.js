@@ -6,6 +6,7 @@ var express = require('express')
   , routes = {
     index: require('./routes/index').index,
     signup: require('./routes/index').signup,
+    signup_post: require('./routes/index').signup_post,
     login: require('./routes/index').login,
     login_post: require('./routes/index').login_post,
     about: require('./routes/index').about,
@@ -46,6 +47,7 @@ app.get('/login', routes.login);
 app.post('/login', routes.login_post);
 
 app.get('/signup', routes.signup);
+app.post('/signup', routes.signup_post);
 
 app.get('/about', routes.about);
 app.get('/search', routes.search);

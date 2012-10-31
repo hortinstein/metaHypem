@@ -11,6 +11,8 @@
     "hypemParser": "*",
     "stylus": "~0.30.1",
     "jade": "~0.27.6",
-    "request": "~2.11.4"
+    "request": "~2.11.4",
+    "hypemParser": "git+ssh://git@github.com:hortinstein/hypemParser.git#master"
+
   }
 }

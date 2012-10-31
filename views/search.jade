@@ -1,26 +1,38 @@
-extends base
+extends index
 
 
 block content
-  .row
-    .span2
-    .span8
-      table.table.table-striped
-        thead
-          tr 
-            th #
-            th Title
-            th Artist
-            th Download
-            th Details
-        tbody
-          each song, i in songs
-            tr
-              td #{i}
-              td #{song.title}
-              td #{song.artist}
-              td 
-                a.btn(href="download/#{song.id}")
-                  i.icon-download-alt
-              td 
-                a(href='song/#{song.id}') View 
+
+  .row-fluid
+    .span6.offset3
+      h2#search-title= title
+      form#song-search.form-search(action="get", action="search")
+        .input-append
+          input(name="query", type="text", class="input-xlarge search-query", placeholder="Search")
+          button.btn(type="submit") Search
+                    
+  .row-fluid
+    .span8.offset2
+      hr
+  - if (songs.length > 0 )
+    .row-fluid
+      .span8.offset2
+        table.table.table-striped
+          thead
+            tr 
+              th #
+              th Title
+              th Artist
+              th Download
+              th Details
+          tbody
+            each song, i in songs
+              tr
+                td #{i}
+                td #{song.title}
+                td #{song.artist}
+                td 
+                  a.btn(href="download/#{song.id}")
+                    i.icon-download-alt
+                td 
+                  a(href='song/#{song.id}') View 

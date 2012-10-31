@@ -3,9 +3,21 @@ extends base
 
 block append head-scripts
   script(src='/javascripts/main.js')
+  
+block heading
+  -var tabs = { 'popular' : 'Popular', 'latest' : 'Latest', 'search' : 'Search' }
+  ul.nav.nav-tabs
+    -each val, key in tabs
+      - if (tab == key)
+        li.active
+          a(href-'#{key}') #{val}
+      - else 
+        li
+          a(href='#{key}') #{val}
 
 block content
-  .row
+          
+  .row-fluid
     .span2
     .span8
       p Welcome to our downloading site! Please search for any song and we will try to give you links to download from!

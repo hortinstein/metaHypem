@@ -36,33 +36,21 @@ html
                   li
                     a(href='#{key}') #{val}
           h3.muted MetaSongDownloader
-        hr
-
         
         //- .jumbotron
         //-   h1 Super Banner
         //-   p.lead This is the inside text box. We can use this for a lot of different banner adds!
         //-   a.btn.btn-large.btn-success(href="#") Sign up Today
         //- hr
-
-
-        .row-fluid.marketing-narrow
-
-
-          block search
-            .span12
-                .row
-                  .span2
-                  .span8
-                    h2= title
-                    form#song-search.form-search(action="get", action="search")
-                      .input-append
-                        input(name="query", type="text", class="input-xlarge search-query", placeholder="Search")
-                        button.btn(type="submit") Search
-                    hr
-
-          block content
-            p You should never see this
+        
+        .row-fluid
+          .span12
+          
+            block heading
+              hr
+                
+            block content
+              p You should never see this
 
 
       #push

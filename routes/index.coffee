@@ -9,8 +9,49 @@ request = require('request')
 index = (req, res) ->
   options =
     id: 'home'
+    tab: 'popular'
     title: 'Look for songs!'
   res.render 'index', options
+  
+  
+popular = (req, res) ->
+  options =
+    id: 'home'
+    tab: 'popular'
+    title: 'Look for songs!'
+  res.render 'index', options
+  
+ 
+latest = (req, res) ->
+  options =
+    id: 'home'
+    tab: 'latest'
+    title: 'Look for songs!'
+  res.render 'index', options
+  
+  
+search = (req, res) ->
+
+  unless req.query.query?
+    #if there is no query argument then just return
+    #the normal search page
+    options =
+      id: 'home'
+      tab: 'search'
+      title: 'Look for songs!'
+      songs: []
+    res.render 'search', options
+    return
+
+  #At this point we have a valid query so lets return some tracks!
+  hypem_parser.search query, (valid_tracks)->
+    options =
+      id: 'home'
+      tab: 'search'
+      title: 'Look for songs!'
+      songs: valid_tracks
+
+    res.render 'search', options
 
 about = (req, res) ->
   options =
@@ -30,18 +71,6 @@ login_post = (req, res) ->
     title: 'Please Login!'
   console.log('login info, need call to acctMgr', req.body)
   res.render "login", options
-
-search = (req, res) ->
-
-  query = req.query.query
-
-  hypem_parser.search query, (valid_tracks)->
-    options =
-      id: 'home'
-      title: 'Look for songs!'
-      songs: valid_tracks
-
-    res.render 'search', options
 
 signup = (req, res) ->
   options =
@@ -67,14 +96,21 @@ download = (req, res) ->
   (err)->
     console.error(err)
 
+#general flow
+exports.index = index
+exports.about = about
+exports.download = download
 
-
-
+#main tabs
+exports.popular = popular
+exports.latest = latest
 exports.search = search
+
+#signup
 exports.signup = signup
 exports.signup_post = signup_post
 exports.login = login
 exports.login_post = login_post
-exports.index = index
+
 exports.about = about
 exports.download = download

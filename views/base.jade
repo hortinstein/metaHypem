@@ -1,15 +1,17 @@
 doctype 5
 html
   head
-    meta(charset="utf-8")
-    meta(http-equiv="X-UA-Compatible", content="IE=edge,chrome=1")
     title= title
-    meta(name="description", content="")
-    meta(name="viewport", content="width=device-width")
-
+    meta(charset="utf-8")
+    meta(name="author", content="Farid Zakaria & Alex Hortin")
+    meta(name="description", content="A simple site to download songs from HypeMachine")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
     link(rel="stylesheet", href="/stylesheets/bootstrap.css")
-    link(rel="stylesheet", href="/stylesheets/bootstrap-responsive.css")
     link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel="apple-touch-icon-precomposed",href="/images/apple-touch-icon-144x144-precomposed.png")
+    link(rel="apple-touch-icon-precomposed",href="/images/apple-touch-icon-114x114-precomposed.png")
+    link(rel="apple-touch-icon-precomposed",href="/images/apple-touch-icon-72x72-precomposed.png")
+    link(rel="apple-touch-icon-precomposed",href="/images/apple-touch-icon-57x57-precomposed.png")
 
     block head-scripts
       script(src="/javascripts/vendor/modernizr-2.6.1-respond-1.1.0.min.js")
@@ -21,51 +23,57 @@ html
 
 
   body
-    //This code is taken from http://twitter.github.com/bootstrap/examples/hero.html
-    .navbar.navbar-inverse.navbar-fixed-top
-      .navbar-inner
-        .container
-          a.btn.btn-navbar(data-toggle="collapse", data-target=".nav-collapse")
-            span.icon-bar
-            span.icon-bar
-            span.icon-bar
-          a.brand(href="/") MetaSongDownloader
+    #wrap
+      //http://twitter.github.com/bootstrap/examples/marketing-narrow.html
+      .container-narrow
+        .masthead
+          ul.nav.nav-pills.pull-right
+            - var obj = { 'home': 'Home', 'about': 'About', 'login': 'Login' }
+              - each val, key in obj
+                - if (id == key)
+                  li.active
+                     a(href='#{key}') #{val}
+                - else
+                  li
+                    a(href='#{key}') #{val}
+          h3.muted MetaSongDownloader
+        hr
 
-          .nav-collapse.collapse
-            ul.nav
-              - var obj = { 'home': 'Home', 'about': 'About', 'login': 'Login' }
-                - each val, key in obj
-                  - if (id == key)
-                    li.active
-                       a(href='#{key}') #{val}
-                  - else
-                    li
-                      a(href='#{key}') #{val}
-
-
-    .container
-      block search
-        .row
-          .span3
-          .span8
-            h2= title
-
-            div(ng-controller="SearchCtrl")
-              form#song-search.form-search(action="get", action="search")
-                .input-append
-                  input(name="query", type="text", class="span4 search-query", placeholder="Search")
-                  button.btn(type="submit") Search
+        
+        //- .jumbotron
+        //-   h1 Super Banner
+        //-   p.lead This is the inside text box. We can use this for a lot of different banner adds!
+        //-   a.btn.btn-large.btn-success(href="#") Sign up Today
+        //- hr
 
 
-      block content
-        h1= title
-        p This is test Content. You shouldn't see this.
+        .row-fluid.marketing-narrow
 
 
-      hr
-      footer
-        &copy; Farid Zakaria & Alex Hortin
+          block search
+            .span12
+                .row
+                  .span2
+                  .span8
+                    h2= title
+                    form#song-search.form-search(action="get", action="search")
+                      .input-append
+                        input(name="query", type="text", class="input-xlarge search-query", placeholder="Search")
+                        button.btn(type="submit") Search
+                    hr
 
+          block content
+            p You should never see this
+
+
+      #push
+
+    #footer
+      .container-narrow
+        p.muted.credit Inspired by 
+          a(href="http://fzakaria.com") Farid Zakaria 
+          | and 
+          a(href="http://github.com/hortinstein") Alex Hortin 
 
     
 

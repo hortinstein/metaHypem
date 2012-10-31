@@ -3,7 +3,7 @@ extends base
 
 block content
   .row
-    .span3
+    .span2
     .span8
       table.table.table-striped
         thead
@@ -12,6 +12,7 @@ block content
             th Title
             th Artist
             th Download
+            th Details
         tbody
           each song, i in songs
             tr
@@ -21,3 +22,5 @@ block content
               td 
                 a.btn(href="download/#{song.id}")
                   i.icon-download-alt
+              td 
+                a(href='song/#{song.id}') View 

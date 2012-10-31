@@ -1,27 +1,29 @@
 extends base
 block search
+
+
 block content
   .row
-    .span3
+    .span2
     .span8
-    #login-container
-    form
-        h1 Hello!
-        p.subheading Please Login To Your Account
-        label Username 
-        input(type="text", name="user", id='user-tf').span4.required
-        label Password
-        input(type="password", name="pass", id='pass-tf').span4.required
-        button(type="submit")#btn-login.btn.btn-primary
-            i.icon-lock.icon-white
-            | Sign in
-        label#remember-me.checkbox Remember Me
-            input(type="checkbox", checked='checked')
-        div.clear-fix
-        hr
-        div.btm-links
-            a(href='#')#forgot-password Forgot Your Password? 
-            a(href='/signup')#create-account Create An Account
+        form.form-signin
+          h2.form-signin-heading Please Sign-in
+          input(type="text",class="input-block-level",placeholder="Email address")
+          input(type="password", class="input-block-level", placeholder="Password")
+          label.checkbox
+            input(type="checkbox", value="remember-me")p Remember Me
+
+          button(class="btn btn-large btn-primary", type="submit") Sign-in
+
+          hr
+
+          div.btm-links
+             a(href='#') Forgot Your Password?
+             a.pull-right(href='/signup') Create An Account
+            
+             
+
+
     
 include modals/alert
 include modals/lost-password

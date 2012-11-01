@@ -1,7 +1,7 @@
 extends index
 
 
-block content
+prepend content
 
   .row-fluid
     .span6.offset3
@@ -14,25 +14,3 @@ block content
   .row-fluid
     .span8.offset2
       hr
-  - if (songs.length > 0 )
-    .row-fluid
-      .span8.offset2
-        table.table.table-striped
-          thead
-            tr 
-              th #
-              th Title
-              th Artist
-              th Download
-              th Details
-          tbody
-            each song, i in songs
-              tr
-                td #{i}
-                td #{song.title}
-                td #{song.artist}
-                td 
-                  a.btn(href="download/#{song.id}")
-                    i.icon-download-alt
-                td 
-                  a(href='song/#{song.id}') View 

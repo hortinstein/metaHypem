@@ -2,35 +2,61 @@ hypem_parser = require('hypemParser/hypemscraper');
 http = require('http')
 fs = require('fs')
 request = require('request')
-#
-#GET home page.
-#
+
+
 
 index = (req, res) ->
-  options =
-    id: 'home'
-    tab: 'popular'
-    title: 'Look for songs!'
-  res.render 'index', options
+  popular req, res
   
   
 popular = (req, res) ->
-  options =
-    id: 'home'
-    tab: 'popular'
-    title: 'Look for songs!'
-  res.render 'index', options
+
+  unless req.params.page
+    req.params.page = 1
+  else
+    req.params.page = parseInt(req.params.page)
+
+  page = req.params.page
+  #At this point we have a valid query so lets return some tracks!
+  hypem_parser.scrape "http://hypem.com/popular/#{page}", (valid_tracks)->
+    options =
+      id: 'home'
+      tab: 'popular'
+      title: 'Popular'
+      songs: valid_tracks
+      page: page
+
+    res.render 'index', options
   
  
 latest = (req, res) ->
-  options =
-    id: 'home'
-    tab: 'latest'
-    title: 'Look for songs!'
-  res.render 'index', options
+  
+  unless req.params.page
+    req.params.page = 1
+  else
+    req.params.page = parseInt(req.params.page)
+
+  page = req.params.page
+  #At this point we have a valid query so lets return some tracks!
+  hypem_parser.scrape "http://hypem.com/latest/#{page}", (valid_tracks)->
+    options =
+      id: 'home'
+      tab: 'latest'
+      title: 'Latest'
+      songs: valid_tracks
+      page: page
+
+    res.render 'index', options
   
   
 search = (req, res) ->
+
+  unless req.params.page
+    req.params.page = 1
+  else
+    req.params.page = parseInt(req.params.page)
+
+  page = req.params.page
 
   unless req.query.query?
     #if there is no query argument then just return
@@ -40,9 +66,12 @@ search = (req, res) ->
       tab: 'search'
       title: 'Look for songs!'
       songs: []
+      page: page
+
     res.render 'search', options
     return
 
+  query = req.query.query
   #At this point we have a valid query so lets return some tracks!
   hypem_parser.search query, (valid_tracks)->
     options =
@@ -50,6 +79,7 @@ search = (req, res) ->
       tab: 'search'
       title: 'Look for songs!'
       songs: valid_tracks
+      page: page
 
     res.render 'search', options
 

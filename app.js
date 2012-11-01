@@ -35,7 +35,7 @@ app.configure(function(){
   app.use(express.session());
   app.use(app.router);
   app.use(require('stylus').middleware(__dirname + '/public'));
-  app.use(express.static(path.join(__dirname, 'public')));
+  app.use(express.static(path.join(__dirname, '/public')));
 });
 
 app.configure('development', function(){
@@ -44,8 +44,8 @@ app.configure('development', function(){
 
 app.get('/', routes.index);
 app.get('/home', routes.index);
-app.get('/popular', routes.popular);
-app.get('/latest', routes.latest);
+app.get('/popular/:page?', routes.popular);
+app.get('/latest/:page?', routes.latest);
 
 app.get('/login', routes.login);
 app.post('/login', routes.login_post);
@@ -62,3 +62,7 @@ app.get('/users', user.list);
 server.listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
 });
+
+
+
+

@@ -10,16 +10,54 @@ block heading
     -each val, key in tabs
       - if (tab == key)
         li.active
-          a(href-'#{key}') #{val}
+          a(href-'/#{key}') #{val}
       - else 
         li
-          a(href='#{key}') #{val}
+          a(href='/#{key}') #{val}
 
 block content
-          
-  .row-fluid
-    .span2
-    .span8
-      p Welcome to our downloading site! Please search for any song and we will try to give you links to download from!
+  - if (songs.length > 0 )
+    .row-fluid
+      .span12
+        table.table.table-striped
+          thead
+            tr 
+              th #
+              th Title
+              th Artist
+              th Download
+              th Details
+          tbody
+            each song, i in songs
+              tr
+                td #{i}
+                td #{song.title}
+                td #{song.artist}
+                td 
+                  a.btn(href="download/#{song.id}")
+                    i.icon-download-alt
+                td 
+                  a(href='song/#{song.id}') View
+
+    - if (songs.length > 0 )
+      .row-fluid
+        .span12
+            ul.pager
+              - var next_page = page + 1
+              - var prev_page = page - 1
+              - if (page == 1)
+                li.previous.disabled
+                  a(href="#") &larr; Previous Page
+              - else
+                li.previous
+                  a(href="/#{tab}/#{prev_page}") &larr; Older
+
+              //if we have 20 songs then there is most likely another page to scrape!
+              - if (songs.length == 20)
+                li.next
+                  a(href="/#{tab}/#{next_page}") Next Page &rarr;
+              - else
+                li.next.disabled
+                  a(href="/#{tab}/#{next_page}") Next Page &rarr;
 
 

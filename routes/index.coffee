@@ -119,7 +119,6 @@ download = (req, res) ->
   song_id = req.params.id
   hypem_parser.get_download_url song_id, (download_url)->
     console.log("Returning download from: #{download_url}")
-    
     res.set('Content-Type', 'audio/mpeg')
     res.set('Content-Disposition', 'attachment')
     request(download_url).pipe(res)

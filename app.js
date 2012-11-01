@@ -3,20 +3,7 @@ require('coffee-script');
  * Module dependencies.
  */
 var express = require('express')
-  , routes = {
-    index: require('./routes/index').index,
-    popular: require('./routes/index').popular,
-    latest: require('./routes/index').latest,
-    signup: require('./routes/index').signup,
-    signup_post: require('./routes/index').signup_post,
-    login: require('./routes/index').login,
-    login_post: require('./routes/index').login_post,
-    about: require('./routes/index').about,
-    download: require('./routes/index').download,
-    search: require('./routes/index').search
-  }
-  , api = require('./routes/api')
-  , user = require('./routes/user')
+  , routes = require('./routes/routes').return_routes()
   , http = require('http')
   , path = require('path');
 
@@ -42,22 +29,8 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
-app.get('/', routes.index);
-app.get('/home', routes.index);
-app.get('/popular/:page?', routes.popular);
-app.get('/latest/:page?', routes.latest);
+require('./routes/routes').attach_routes(app)
 
-app.get('/login', routes.login);
-app.post('/login', routes.login_post);
-
-app.get('/signup', routes.signup);
-app.post('/signup', routes.signup_post);
-
-app.get('/about', routes.about);
-app.get('/search', routes.search);
-app.get('/download/:id', routes.download);
-app.get('/api/search', api.search);
-app.get('/users', user.list);
 
 server.listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));

@@ -3,9 +3,30 @@ extends base
 block search
 
 block content
-  .row
-    .span2
-    .span8
-      p This is a work in progress by Alex and Farid. We are rebuilding the site in Node.JS just because it's fun!
+  .row-fluid
+    .span6
+      p 
+      | Welcome to our site. This is a work in progress by 
+      a(href="https://github.com/hortinstein") Alex Hortin
+      |  and 
+      a(href="http://fzakaria.com") Farid Zakaria
+      | .
+      
+      p 
+      | The goal of the site is to try and provide you with the best experience possible in retrieving songs from 
+      a(href="http://hypem.com") Hype Machine
+      | .
+   
+
+    .span6
+      h3 Powered By 
+      p This is a quick list of a lot of the modules and technolgies we've used to help power the site!
+      ul.thumbnails
+        li.span10
+          a.thumbnail(href="http://nodejs.org")
+            img.img-polaroid(src="/images/nodejs-dark.png", alt="NodeJS")
+        li.span10
+          a.thumbnail(href="http://coffeescript.org")
+            img.img-polaroid(src="/images/coffees-cript.png", alt="Coffee-Script")
 
 

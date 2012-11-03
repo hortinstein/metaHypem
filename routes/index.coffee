@@ -18,8 +18,8 @@ popular = (req, res) ->
 
   page = req.params.page
   #At this point we have a valid query so lets return some tracks!
-  #hypem_parser.scrape "http://hypem.com/popular/#{page}", (valid_tracks)->
-  hypem_parser.popular (valid_tracks)->
+  hypem_parser.scrape "http://hypem.com/popular/#{page}", (valid_tracks)->
+  #hypem_parser.popular (valid_tracks)->
     options =
       id: 'home'
       tab: 'popular'
@@ -39,8 +39,8 @@ latest = (req, res) ->
 
   page = req.params.page
   #At this point we have a valid query so lets return some tracks!
-  #hypem_parser.scrape "http://hypem.com/latest/#{page}", (valid_tracks)->
-  hypem_parser.latest (valid_tracks)->
+  hypem_parser.scrape "http://hypem.com/latest/#{page}", (valid_tracks)->
+  #hypem_parser.latest (valid_tracks)->
     options =
       id: 'home'
       tab: 'latest'

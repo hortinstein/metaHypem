@@ -117,6 +117,7 @@ app.post('/login',
 
 
 app.get('/logout', function(req, res){
+  req.flash("success", " Logged out of account " + req.user.username)
   req.logout();
   res.redirect('/');
 });

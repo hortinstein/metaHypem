@@ -18,7 +18,8 @@ popular = (req, res) ->
 
   page = req.params.page
   #At this point we have a valid query so lets return some tracks!
-  hypem_parser.scrape "http://hypem.com/popular/#{page}", (valid_tracks)->
+  #hypem_parser.scrape "http://hypem.com/popular/#{page}", (valid_tracks)->
+  hypem_parser.popular (valid_tracks)->
     options =
       id: 'home'
       tab: 'popular'
@@ -38,7 +39,8 @@ latest = (req, res) ->
 
   page = req.params.page
   #At this point we have a valid query so lets return some tracks!
-  hypem_parser.scrape "http://hypem.com/latest/#{page}", (valid_tracks)->
+  #hypem_parser.scrape "http://hypem.com/latest/#{page}", (valid_tracks)->
+  hypem_parser.latest (valid_tracks)->
     options =
       id: 'home'
       tab: 'latest'
@@ -89,32 +91,6 @@ about = (req, res) ->
     title: 'About'
   res.render 'about', options
 
-login = (req, res) ->
-  options =
-    id: 'login'
-    title: 'Please Login!'
-  res.render 'login', options
-
-login_post = (req, res) ->
-  options =
-    id: 'login_post'
-    title: 'Please Login!'
-  console.log('login info, need call to acctMgr', req.body)
-  res.render "login", options
-
-signup = (req, res) ->
-  options =
-    id: 'signup'
-    title: 'Signup!'
-  res.render 'signup', options
-
-signup_post = (req, res) ->
-  options =
-    id: 'signup'
-    title: 'Signup!'
-  console.log('signup info, need call to acctMgr', req.body)
-  res.render 'signup', options
-
 download = (req, res) ->
   song_id = req.params.id
   hypem_parser.get_download_url song_id, (download_url)->
@@ -134,12 +110,6 @@ exports.download = download
 exports.popular = popular
 exports.latest = latest
 exports.search = search
-
-#signup
-exports.signup = signup
-exports.signup_post = signup_post
-exports.login = login
-exports.login_post = login_post
 
 exports.about = about
 exports.download = download

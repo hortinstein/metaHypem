@@ -1,6 +1,16 @@
 mongoose = require('mongoose')
-Account = require("../models/account")
+
 hypem_parser = require('hypemParser/hypemscraper');
+
+AM = require('accountManager/accountManager')
+
+config = 
+  redis_host: "127.0.0.1"
+  redis_port: "6379"
+  type: "redis",
+  database_name: "test_user_records",
+AM.setup(config)
+
 
 account = (req, res) ->
   unless req.params.page
@@ -33,31 +43,25 @@ signup = (req, res) ->
   res.render 'users/signup', options
 
 signup_post = (req, res) ->
+  new_account =
+    email: req.body.email 
+    username: "u_"+req.body.email 
+    pass: req.body.password
+    hypem_username: req.body.username
 
-  new_account = new Account(req.body)
-  console.log(req.body)
-  console.log("Created new account ")
-
-  new_account.validate (err)->
+  AM.signup new_account, (err)->
     if err
-      req.flash('error', "You are missing some fields!" )
+      req.flash('error', err)
       options =
         id: 'signup'
         title: 'Signup!'
 
       res.render 'users/signup', options
     else
-      new_account.save (err)->
-        if err
-          req.flash('error', "This e-mail has already been registered." )
-          options =
-            id: 'signup'
-            title: 'Signup!'
-          res.render 'users/signup', options
-        else
-          req.flash("success", "Welcome #{new_account.username}")
-          req.login new_account, (err)->
-          res.redirect("/account")
+      console.log("Created new account ")
+      req.flash("success", "Welcome #{new_account.username}")
+      req.login new_account, (err)->
+      res.redirect("/account")
 
 
 #signup

@@ -9,6 +9,7 @@
     "express": "~3.0.0",
     "coffee-script": "~1.4.0",
     "hypemParser": "git+https://github.com/hortinstein/hypemParser.git",
+    "accountManager":"git+https://github.com/hortinstein/accountManager.git",
     "stylus": "~0.30.1",
     "jade": "~0.27.6",
     "request": "~2.11.4",

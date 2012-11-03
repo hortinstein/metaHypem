@@ -33,6 +33,19 @@ var expose_flash = function(req, res, next) {
     next();
   }
 
+AM = require('accountManager/accountManager')
+config = {
+  "type": "redis",
+  "database_name": "test_user_records",
+  "redis_host": "127.0.0.1",
+  "redis_port": "6379",
+}
+AM.setup(config)
+AM.buildDB(function () {
+  
+})
+
+
 app.configure(function(){
   app.set('port', process.env.PORT || 3000);
   app.set('views', __dirname + '/views');
@@ -74,14 +87,16 @@ var Account = require("./models/account");
 // Define local strategy for Passport
 // usernameField is how we tell it what input type name to look for
 passport.use(new LocalStrategy({
-    usernameField: 'email'
+    usernameField: 'email',
+    passwordField: 'password'
   },
-  function(email, password, done) {
-    Account.authenticate(email, password, function(err, user) {
+  function(email, password, done) { 
+    console.log(email,password)
+    AM.manualLogin(email, password, function(err, user) {
         if (err) { return done(err); }
         if (!user) { return done(null, false, { message: 'Incorrect e-mail & password combination.' }); }
         return done(null, user);
-    });
+    })
   }
 ));
 
@@ -91,11 +106,12 @@ Each subsequent request will not contain credentials, but rather a unique cookie
 In order to support login sessions, Passport can serialize and deserialize user instances to and from the session.
 */
 passport.serializeUser(function(user, done) {
-  done(null, user._id);
+  done(null, user.email);
 });
 
 passport.deserializeUser(function(id, done) {
-  Account.findById(id, function (err, user) {
+  console.log(id)
+  AM.getByEmail(id, function (err, user) {
     done(err, user);
   });
 });

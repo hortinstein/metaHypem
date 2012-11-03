@@ -13,6 +13,7 @@
     "jade": "~0.27.6",
     "request": "~2.11.4",
     "passport": "~0.1.12",
+    "passport-local": "",
     "connect-flash": "~0.1.0",
     "mongoose": "~3.3.1",
     "bcrypt": "~0.7.2"

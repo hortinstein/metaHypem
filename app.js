@@ -34,7 +34,7 @@ var expose_flash = function(req, res, next) {
     next();
   }
 
-try { var config = require('./config.json');} //load config from root dir 
+try { config = require('./config.json');} //load config from root dir 
 catch (err) {console.log("...test: no config.js",err );};
 AM = require('accountManager/accountManager')
 AM.setup(config)

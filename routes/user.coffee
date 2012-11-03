@@ -35,7 +35,7 @@ signup = (req, res) ->
 signup_post = (req, res) ->
 
   new_account = new Account(req.body)
-
+  console.log(req.body)
   console.log("Created new account ")
 
   new_account.validate (err)->

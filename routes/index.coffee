@@ -1,4 +1,5 @@
-hypem_parser = require('hypemParser/hypemscraper');
+hypem_parser = require('hypemParser/hypemscraper')
+hypem_parser.set_DB_clients()
 http = require('http')
 fs = require('fs')
 request = require('request')

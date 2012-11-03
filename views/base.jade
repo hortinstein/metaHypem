@@ -27,14 +27,20 @@ html
       .container-narrow
         .masthead
           ul.nav.nav-pills.pull-right
-            - var obj = { 'home': 'Home', 'about': 'About', 'login': 'Login' }
-              - each val, key in obj
-                - if (id == key)
-                  li.active
-                     a(href='/#{key}') #{val}
-                - else
-                  li
-                    a(href='/#{key}') #{val}
+            - var obj = { 'home': 'Home', 'about': 'About' }
+            - if (user)
+              - obj['account'] = user.username
+              - obj['logout'] = 'Logout'
+            - else
+              - obj['login'] = 'Login'
+
+            - each val, key in obj
+              - if (id == key)
+                li.active
+                   a(href='/#{key}') #{val}
+              - else
+                li
+                  a(href='/#{key}') #{val}
           h3.muted MetaSongDownloader
         
         //- .jumbotron
@@ -45,6 +51,29 @@ html
         
         .row-fluid
           .span12
+
+            - var error_list = flash("error")
+            - for error_msg in error_list
+                .alert.alert-error.fade-in
+                  button.close(type="button", data-dismiss="alert") x
+                  p
+                    strong Error 
+                    | #{error_msg}
+
+            - var info_list = flash("info")
+            - for info_msg in info_list
+                .alert.alert-info.fade-in
+                  button.close(type="button", data-dismiss="alert") x
+                  p #{info_msg}
+
+            - var success_list = flash("success")
+            - for success_msg in success_list
+                .alert.alert-success.fade-in
+                  button.close(type="button", data-dismiss="alert") x
+                  p
+                    strong Success 
+                    | #{success_msg}
+
           
             block heading
               hr

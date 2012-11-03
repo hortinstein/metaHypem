@@ -1,0 +1,47 @@
+extends ../base
+
+block content
+  .row-fluid
+    .span12
+      p Welcome #{user.username}
+      - if (songs.length > 0 )
+        table.table.table-striped
+          thead
+            tr 
+              th #
+              th Title
+              th Artist
+              th Download
+              th Details
+          tbody
+            each song, i in songs
+              tr
+                td #{i}
+                td #{song.title}
+                td #{song.artist}
+                td 
+                  a.btn(href="download/#{song.id}")
+                    i.icon-download-alt
+                td 
+                  a(href='song/#{song.id}') View
+
+  .row-fluid
+    .span12
+      - if (songs.length > 0 )
+          ul.pager
+            - var next_page = page + 1
+            - var prev_page = page - 1
+            - if (page == 1)
+              li.previous.disabled
+                a(href="#") &larr; Previous Page
+            - else
+              li.previous
+                a(href="/#{user.username}/#{prev_page}") &larr; Older
+
+            //if we have 20 songs then there is most likely another page to scrape!
+            - if (songs.length == 20)
+              li.next
+                a(href="/#{user.username}/#{next_page}") Next Page &rarr;
+            - else
+              li.next.disabled
+                a(href="/#{user.username}/#{next_page}") Next Page &rarr;

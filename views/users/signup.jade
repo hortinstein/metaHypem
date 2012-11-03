@@ -1,0 +1,26 @@
+extends ../base
+
+block content
+  .row
+    .span2
+    .span8
+        form.form-signin(method="post")
+          h2.form-signin-heading Please Sign-up
+          label E-mail
+          input(type="text", name="email", class="input-block-level",placeholder="Email address")
+
+          label Password
+          input(type="password", name="password",class="input-block-level", placeholder="Password")
+
+          label HypeMachine Username
+          input(type="text", name="username",class="input-block-level", placeholder="Username")
+
+          button(class="btn btn-large btn-primary", type="submit") Sign-Up
+
+          hr
+
+          div.btm-links
+             a(href='#') Forgot Your Password?
+             a.pull-right(href='/login') Login
+            
+             

@@ -27,24 +27,17 @@ var add_user = function(req, res, next){
   res.locals.user = req.user;
   next();
   };
+
 // Expose the flash function to the view layer
 var expose_flash = function(req, res, next) {
     res.locals.flash = function(type) { return req.flash(type) };
     next();
   }
 
+try { var config = require('./config.json');} //load config from root dir 
+catch (err) {console.log("...test: no config.js",err );};
 AM = require('accountManager/accountManager')
-config = {
-  "type": "redis",
-  "database_name": "test_user_records",
-  "redis_host": "127.0.0.1",
-  "redis_port": "6379",
-}
 AM.setup(config)
-AM.buildDB(function () {
-  
-})
-
 
 app.configure(function(){
   app.set('port', process.env.PORT || 3000);
@@ -81,9 +74,6 @@ app.get('/download/:id', routes.download);
 
 /* Account Management and Passport Settings start Here */
 
-//Here is the model for our user Accounts
-var Account = require("./models/account");
-
 // Define local strategy for Passport
 // usernameField is how we tell it what input type name to look for
 passport.use(new LocalStrategy({
@@ -110,7 +100,6 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-  console.log(id)
   AM.getByEmail(id, function (err, user) {
     done(err, user);
   });

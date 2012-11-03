@@ -1,14 +1,10 @@
-mongoose = require('mongoose')
-
 hypem_parser = require('hypemParser/hypemscraper');
-
 AM = require('accountManager/accountManager')
 
-config = 
-  redis_host: "127.0.0.1"
-  redis_port: "6379"
-  type: "redis",
-  database_name: "test_user_records",
+try
+  config = require('../config.json')
+catch error 
+  console.log(error,"no config")
 AM.setup(config)
 
 
@@ -45,7 +41,7 @@ signup = (req, res) ->
 signup_post = (req, res) ->
   new_account =
     email: req.body.email 
-    username: "u_"+req.body.email 
+    username: req.body.email 
     pass: req.body.password
     hypem_username: req.body.username
 

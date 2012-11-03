@@ -1,10 +1,15 @@
 hypem_parser = require('hypemParser/hypemscraper')
-hypem_parser.set_DB_clients()
+
+try
+  config = require('../config.json')
+catch error 
+  console.log(error,"no config")
+
+hypem_parser.set_DB_clients(config)
+
 http = require('http')
 fs = require('fs')
 request = require('request')
-AM = require('accountManager/accountManager')
-
 
 
 index = (req, res) ->
@@ -21,7 +26,6 @@ popular = (req, res) ->
   page = req.params.page
   #At this point we have a valid query so lets return some tracks!
   hypem_parser.scrape "http://hypem.com/popular/#{page}", (valid_tracks)->
-  #hypem_parser.popular (valid_tracks)->
     options =
       id: 'home'
       tab: 'popular'

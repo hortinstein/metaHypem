@@ -16,7 +16,7 @@ account = (req, res) ->
 
   page = req.params.page
   #At this point we have a valid query so lets return some tracks!
-  hypem_parser.scrape "http://hypem.com/#{req.user.username}/#{page}", (valid_tracks)->
+  hypem_parser.scrape "http://hypem.com/#{req.user.hypem_username}/#{page}", (valid_tracks)->
     options =
       id: 'account'
       title: 'Welcome'

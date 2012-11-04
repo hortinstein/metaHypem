@@ -38,7 +38,9 @@ try { config = require('./config.json');} //load config from root dir
 catch (err) {console.log("...test: no config.js",err );};
 AM = require('accountManager/accountManager')
 AM.setup(config)
-
+AM.buildDB(function(err){
+  console.log("DB built")
+});
 app.configure(function(){
   app.set('port', process.env.PORT || 3000);
   app.set('views', __dirname + '/views');

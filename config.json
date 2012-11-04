@@ -1,9 +1,8 @@
 {
   "type": "redis",
-  "database_name": "test_user_records",
+  "database_name": "hypem",
   "redis_host": "127.0.0.1",
   "redis_port": "6379",
-  "couch_host":"https://hortinstein.cloudant.com/",
-  "couch_user": "predditor",
-  "couch_pass":"hypemshare"
+  "couch_host":"https://hortinstein:password@hortinstein.cloudant.com"
+  
 }

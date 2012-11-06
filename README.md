@@ -33,3 +33,12 @@ On the Linode machine you can use [forever](https://github.com/nodejitsu/forever
 3. Create Release branch
 4. Tag a commit in Release branch as 0.1
 5. Deploy to Linode release branch 
+6. 404 and 505 page
+7. Setup production vs development settings. For instance in production stylus shouldnt generate CSS and it should just serve the static file
+8. Add TTL for hypemParser records
+9. Change layout to use accordian style from Github
+10. Added new node user on linode and add alex, me and node to www-data group.
+11. register domain metahypem.com with google
+12. Setup domain to point to app on linode
+13. Setup Google App account
+14. Polish About page (add donations)

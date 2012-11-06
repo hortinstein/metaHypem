@@ -41,8 +41,8 @@ signup = (req, res) ->
 signup_post = (req, res) ->
   new_account =
     email: req.body.email 
-    username: req.body.email 
     pass: req.body.password
+    username: req.body.email
     hypem_username: req.body.username
 
   AM.signup new_account, (err)->

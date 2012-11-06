@@ -41,6 +41,7 @@ AM.setup(config)
 AM.buildDB(function(err){
   console.log("DB built")
 });
+
 app.configure(function(){
   app.set('port', process.env.PORT || 3000);
   app.set('views', __dirname + '/views');
@@ -85,7 +86,7 @@ passport.use(new LocalStrategy({
   function(email, password, done) { 
     console.log(email,password)
     AM.manualLogin(email, password, function(err, user) {
-        if (err) { return done(err); }
+        if (err || !user)   { return done(null, false, { message: err }); }
         if (!user) { return done(null, false, { message: 'Incorrect e-mail & password combination.' }); }
         return done(null, user);
     })

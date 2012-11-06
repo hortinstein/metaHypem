@@ -29,7 +29,7 @@ html
           ul.nav.nav-pills.pull-right
             - var obj = { 'home': 'Home', 'about': 'About' }
             - if (user)
-              - obj['account'] = user.username
+              - obj['account'] = user.hypem_username
               - obj['logout'] = 'Logout'
             - else
               - obj['login'] = 'Login'

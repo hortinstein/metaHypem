@@ -1,20 +1,12 @@
-MetaDownloaderSite~!
+#MetaDownloaderSite#
 
-Installation:
+##Development##
 
-1. Download/Clone metaHypem from Github
-2. Download/Clone hypemParser from Github
-3. cd hypemParser
-4. sudo npm link
-5. cd metaHypem
-6. npm link hypemParser
-
-Tips:
-
-1 - Install supervisor (npm install -g supervisor) and run with the command
-` supervisor -e 'node|js|html|jade|coffee|css' app.js `
-This performs server restarts on code change! :)
-
+###Installation###
+1. `git clone` the current metaHypem repository + any other development packages (i.e. hypemParser or accountManager)
+2.  execute `sudo npm link` in all node packages that will be under development
+3.  execute `sudo npm link <package name>` in metaHypem to link to the development package.
+4.  Launch the server with hot reload on code change `supervisor -e 'node|js|html|jade|coffee|css' app.js`
 
 ##Deployment##
 
@@ -26,6 +18,18 @@ Currently we have deployment options available on linode on the host 198.74.50.2
 
 ####Setup####
 The server is setup with [Nginx](http://nginx.org/) (pronounced EngineX) as the front end to Node.JS. The choice of a front-end HTTP server is important. Nginx is an event based HTTP server (similar to Node.JS) and is therefore non blocking. Although we could have just run the node server as is, having the Nginx front-end allows us to run multiple sites easily (such as my wordpress blog).
+Redis is currently running on the same linode instance as a caching layer.
 
 ####Running####
-On the Linode machine you can use [forever](https://github.com/nodejitsu/forever) to start the node app as a daemon. Typical commands are 
+On the Linode machine you can use [forever](https://github.com/nodejitsu/forever) to start the node app as a daemon. Typical commands are `forever start app.js` or `forever list` to see a list of all running node applications.
+
+####Common Operations####
+1. `sudo service nginx restart` - restart the nginx server
+2. `sudo nginx_ensite <sitename>` (or nginx_dissensite) - enable/disable the site configuration file for each virtual host (found in /etc/nginx/sites-available/)
+
+##TO DO##
+1. Polish AccountManager branch
+2. Merge AccountManager branch into master branch
+3. Create Release branch
+4. Tag a commit in Release branch as 0.1
+5. Deploy to Linode release branch 

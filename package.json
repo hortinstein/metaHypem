@@ -20,11 +20,6 @@
     "bcrypt": "~0.7.2",
     "nodetime": "0.4.x"
   },
-  "bundledDependencies": [
-    "redis",
-    "hypemParser",
-    "accountManager"
-  ],
   "subdomain": "metaHypem",
   "engines": {
     "node": "0.8.x"

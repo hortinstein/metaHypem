@@ -107,10 +107,9 @@ download = (req, res) ->
     console.log("Returning download from: #{download_url}")
     res.set('Content-Type', 'audio/mpeg')
     res.set('Content-Disposition', 'attachment')
-    r = request(download_url).pipe(res)
-    r.on 'end', () ->
-      redis_client.incr "global_downloads"                  #increment global downloads
-      redis_client.hincrby req.params.id, "song_downloads", 1 #increment song downloads
+    request(download_url).pipe(res)
+    redis_client.incr "global_downloads"                  #increment global downloads
+    redis_client.hincrby req.params.id, "song_downloads", 1 #increment song downloads
   (err)->
     console.error(err)
 

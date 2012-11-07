@@ -1,9 +1,9 @@
 {
   "type": "redis",
   "database_name": "hypem",
-  "redis_host": "clingfish.redistogo.com",
-  "redis_port": "9451",
-  "redis_pass":"5dd43ca03f9af3b0fdaa2822ae2c257a",
+  "redis_host": "localhost",
+  "redis_port": "6379",
+  "redis_pass":"",
   "couch_host":"https://hortinstein:password@hortinstein.cloudant.com"
   
 }

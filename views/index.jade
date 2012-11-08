@@ -19,13 +19,15 @@ block content
           each song, i in songs
             .accordion-group
               .accordion-heading(style="background-color: #f9f9f9;")
+                // We allow both the title span and the artist span by adding accordion-toggle to each one. 
                 .row-fluid
-                  .span6.accordion-toggle
-                    a(data-toggle="collapse", data-target="##{song.id}")=song.title
-                  .span5.heading-element
+                  .span6.accordion-toggle(data-toggle="collapse", data-target="##{song.id}")
+                    // this link doesn't really go anywhere. It's just to give the appearance and help inform the user that the accordion expands
+                    a=song.title
+                  .span5.accordion-toggle(data-toggle="collapse", data-target="##{song.id}")
                     p=song.artist
                   .span1.heading-button
-                    a.btn.pull-right(rel="tooltip",title="Download!",data-placement="top", data-delay=500, href="/download/#{song.id}")
+                    a.btn.pull-right.song-download(rel="tooltip",title="Download!",data-placement="top", data-delay=500, href="/download/#{song.id}")
                       i.icon-download-alt
               .accordion-body.collapse(id=song.id)
                 .accordion-inner
@@ -38,11 +40,6 @@ block content
                   p 
                     b Length: 
                     | #{song.humanize_time}
-
-    script
-      $(function(){
-        $("[rel=tooltip]").tooltip();
-      })
 
     - if (songs.length > 0 )
       .row-fluid
@@ -64,5 +61,10 @@ block content
               - else
                 litwit.next.disabled
                   a(href="/#{tab}/#{next_page}") Next Page &rarr;
+
+    script
+      $(function(){
+        $('[rel=tooltip]').tooltip();
+      })
 
 

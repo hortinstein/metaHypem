@@ -10,6 +10,13 @@
 
 ##Deployment##
 
+##Databases##
+
+###CouchDb###
+CouchDB comes with an excellent online web based [administrative console](http://guide.couchdb.org/draft/tour.html#welcome). This console however is generally for localhost access. In order to acess the administrative consolte remotely you'll need to SSH tunnel into the host. You can find general instructions on how to perform this [here](http://library.linode.com/databases/couchdb/ssh-tunnel).
+
+Very briefly, there is a couchdb-tunnle.pl script which will create an SSH tunnel on a Windows/Linux machine. Once this has been created via the command `./couchdb-tunnel.pl start` you may access the administrative console by visiting the URL [http://localhost:5984](http://localhost:5984). 
+
 ###Linode###
 
 ####Introduction####

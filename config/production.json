@@ -1,0 +1,21 @@
+  /* AccountManager parameters
+   *
+   * This controls  the settings for the  cache
+   */
+  {
+    "AM": {
+      "type": "couch",
+      "name": "users",
+      "host": "localhost",
+      "port": 6379,
+      /*The plan is to eventually remove couch_host and make it simply host and port*/
+      "couch_host":"http://127.0.0.1:5984"
+    },
+    "Cache": {
+      "type": "redis",
+      "name": "songs",
+      "host": "localhost",
+      "port": 6379
+    }
+  }
+  

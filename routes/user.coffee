@@ -1,13 +1,6 @@
 hypem_parser = require('hypemParser/hypemscraper');
 AM = require('accountManager/accountManager')
 
-try
-  config = require('../config.json')
-catch error 
-  console.log(error,"no config")
-AM.setup(config)
-
-
 account = (req, res) ->
   unless req.params.page
     req.params.page = 1

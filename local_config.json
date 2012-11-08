@@ -1,8 +1,0 @@
-{
-  "type": "redis",
-  "database_name": "hypem",
-  "redis_host": "127.0.0.1",
-  "redis_port": "6379",
-  "couch_host":"http://127.0.0.1:5984"
-  
-}

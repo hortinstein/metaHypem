@@ -18,7 +18,9 @@
     "connect-flash": "~0.1.0",
     "mongoose": "~3.3.1",
     "bcrypt": "~0.7.2",
-    "nodetime": "0.4.x"
+    "nodetime": "0.4.x",
+    "redis": "~0.8.2",
+    "config": "~0.4.17"
   },
   "subdomain": "metaHypem",
   "engines": {

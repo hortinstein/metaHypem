@@ -1,12 +1,7 @@
 hypem_parser = require('hypemParser/hypemscraper')
 redis = require('redis')
 redis_client = redis.createClient()
-try
-  config = require('../config.json')
-catch error 
-  console.log(error,"no config")
 
-hypem_parser.set_DB_clients(config)
 
 http = require('http')
 fs = require('fs')
@@ -103,11 +98,12 @@ about = (req, res) ->
 
 download = (req, res) ->
   song_id = req.params.id
-  hypem_parser.get_download_url song_id, (download_url)->
+  hypem_parser.get_download_url song_id, (track, download_url)->
+    filename = track.title
     console.log("Returning download from: #{download_url}")
     res.set('Content-Type', 'audio/mpeg')
-    res.set('Content-Disposition', 'attachment')
-    request(download_url).pipe(res)
+    res.set('Content-Disposition', 'attachment; filename="'+filename+'.mp3"')
+    request.get(download_url).pipe(res)
     redis_client.incr "global_downloads"                  #increment global downloads
     redis_client.hincrby req.params.id, "song_downloads", 1 #increment song downloads
   (err)->

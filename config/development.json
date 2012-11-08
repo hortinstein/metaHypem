@@ -1,0 +1,19 @@
+  /* AccountManager parameters
+   *
+   * This controls  the settings for the  cache
+   */
+  {
+    "AM": {
+      "type": "redis",
+      "name": "users",
+      "host": "localhost",
+      "port": 6379
+    },
+    "Cache": {
+      "type": "redis",
+      "name": "songs",
+      "host": "localhost",
+      "port": 6379
+    }
+  }
+  

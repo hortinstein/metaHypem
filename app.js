@@ -39,13 +39,13 @@ var expose_flash = function(req, res, next) {
     next();
   }
 
-try { config = require('./config.json');} //load config from root dir 
-catch (err) {console.log("...test: no config.js",err );};
-AM = require('accountManager/accountManager')
-AM.setup(config)
-AM.buildDB(function(err){
-  console.log("DB built")
-});
+var Config = require('config');
+
+var AM = require('accountManager/accountManager');
+AM.setup(Config.AM);
+
+var hypemParser = require('hypemParser/hypemscraper')
+hypemParser.setup(Config.Cache);
 
 app.configure(function(){
   app.set('port', process.env.PORT || 3000);
@@ -68,8 +68,12 @@ app.configure(function(){
 });
 
 app.configure('development', function(){
+  app.use(express.errorHandler({showStack: true, dumpExceptions: true}));
+});
+app.configure('production', function(){
   app.use(express.errorHandler());
 });
+
 
 app.get('/', routes.index);
 app.get('/home', routes.index);

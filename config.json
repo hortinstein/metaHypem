@@ -1,9 +1,0 @@
-{
-  "type": "redis",
-  "database_name": "hypem",
-  "redis_host": "localhost",
-  "redis_port": "6379",
-  "redis_pass":"",
-  "couch_host":"https://hortinstein:password@hortinstein.cloudant.com"
-  
-}

@@ -7,6 +7,19 @@ require('nodetime').profile({
     appName: 'metaHypem'
   });
 
+/*Let us setup all our databases and configurations
+that are specific to development or production settings.
+These shoudl go at the start so all setup can initialize any database
+connections we need as early as possible
+*/
+var Config = require('config');
+
+var AM = require('accountManager/accountManager');
+AM.setup(Config.AM);
+var hypemParser = require('hypemParser/hypemscraper')
+hypemParser.setup(Config.Cache);
+
+
 var express = require('express')
   , routes = {
     index: require('./routes/index').index,
@@ -38,14 +51,6 @@ var expose_flash = function(req, res, next) {
     res.locals.flash = function(type) { return req.flash(type) };
     next();
   }
-
-var Config = require('config');
-
-var AM = require('accountManager/accountManager');
-AM.setup(Config.AM);
-
-var hypemParser = require('hypemParser/hypemscraper')
-hypemParser.setup(Config.Cache);
 
 app.configure(function(){
   app.set('port', process.env.PORT || 3000);

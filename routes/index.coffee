@@ -1,11 +1,10 @@
 hypem_parser = require('hypemParser/hypemscraper')
-redis = require('redis')
-redis_client = redis.createClient()
-
-
 http = require('http')
 fs = require('fs')
 request = require('request')
+redis = require('redis')
+Config = require('config');
+redis_client = redis.createClient(Config.Cache.port, Config.Cache.host)
 
 
 index = (req, res) ->
@@ -88,7 +87,6 @@ search = (req, res) ->
 
 about = (req, res) ->
   redis_client.get "global_downloads", (e,num_downloads) ->  
-    console.log num_downloads
     options =
       id: 'about'
       title: 'About'
@@ -99,13 +97,19 @@ about = (req, res) ->
 download = (req, res) ->
   song_id = req.params.id
   hypem_parser.get_download_url song_id, (track, download_url)->
-    filename = track.title
     console.log("Returning download from: #{download_url}")
     res.set('Content-Type', 'audio/mpeg')
-    res.set('Content-Disposition', 'attachment; filename="'+filename+'.mp3"')
+    res.set('Content-Disposition', 'attachment; filename="'+track.title+'.mp3"')
     request.get(download_url).pipe(res)
-    redis_client.incr "global_downloads"                  #increment global downloads
-    redis_client.hincrby req.params.id, "song_downloads", 1 #increment song downloads
+    #For some reason, express.js on a response end event emits a finish
+    #http://www.samcday.com.au/blog/2011/06/27/listening-for-end-of-response-with-nodeexpress-js/
+    res.on "finish", ()->
+      console.log("Completed song download") 
+      #Increase our global download count by 1 (not song specific so keeping here instead of scraper)
+      redis_client.incr "global_downloads" 
+      #Do song specific stuff like increase download count
+      hypem_parser.song_downloaded(song_id)
+
   (err)->
     console.error(err)
 

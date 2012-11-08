@@ -5,6 +5,8 @@ block search
 block content
   .row-fluid
     .span6
+      if downloads
+        h3 We've served #{downloads} songs!
       p 
       | Welcome to our site. This is a work in progress by 
       a(href="https://github.com/hortinstein") Alex Hortin
@@ -16,8 +18,7 @@ block content
       | The goal of the site is to try and provide you with the best experience possible in retrieving songs from 
       a(href="http://hypem.com") Hype Machine
       | .
-      if downloads
-        h3 metahypem has served #{downloads} songs!
+
 
     .span6
       

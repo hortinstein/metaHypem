@@ -40,6 +40,7 @@ block content
                   p 
                     b Length: 
                     | #{song.humanize_time}
+                  audio(src="/download/#{song.id}",controls="controls", preload="none") Your browser does not support the audio element.
 
     - if (songs.length > 0 )
       .row-fluid

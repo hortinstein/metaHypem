@@ -28,6 +28,7 @@ popular = (req, res) ->
       songs: valid_tracks
       page: page
 
+    console.log(valid_tracks)
     res.render 'index', options
   
  

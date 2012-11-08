@@ -15,25 +15,34 @@ block content
   - if (songs.length > 0 )
     .row-fluid
       .span12
-        table.table.table-striped
-          thead
-            tr 
-              th #
-              th Title
-              th Artist
-              th Download
-              th Details
-          tbody
-            each song, i in songs
-              tr
-                td #{i}
-                td #{song.title}
-                td #{song.artist}
-                td 
-                  a.btn(href="/download/#{song.id}")
-                    i.icon-download-alt
-                td 
-                  a(href='song/#{song.id}') View
+        .accordion#song-accordion
+          each song, i in songs
+            .accordion-group
+              .accordion-heading(style="background-color: #f9f9f9;")
+                .row-fluid
+                  .span6.accordion-toggle
+                    a(data-toggle="collapse", data-target="##{song.id}")=song.title
+                  .span5.heading-element
+                    p=song.artist
+                  .span1.heading-button
+                    a.btn.pull-right(rel="tooltip",title="Download!",data-placement="top", data-delay=500, href="/download/#{song.id}")
+                      i.icon-download-alt
+              .accordion-body.collapse(id=song.id)
+                .accordion-inner
+                  p
+                    b Title: 
+                    | #{song.title}
+                  p 
+                    b Artist:  
+                    | #{song.artist}
+                  p 
+                    b Length: 
+                    | #{song.humanize_time}
+
+    script
+      $(function(){
+        $("[rel=tooltip]").tooltip();
+      })
 
     - if (songs.length > 0 )
       .row-fluid
@@ -53,7 +62,7 @@ block content
                 li.next
                   a(href="/#{tab}/#{next_page}") Next Page &rarr;
               - else
-                li.next.disabled
+                litwit.next.disabled
                   a(href="/#{tab}/#{next_page}") Next Page &rarr;
 
 

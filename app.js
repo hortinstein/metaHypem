@@ -1,37 +1,29 @@
 require('coffee-script');
-/**
- * Module dependencies.
- */
+
+
+//metrics trial
 require('nodetime').profile({
     accountKey: '3a92a49d862b1674e0d0d0582b382dae1a21a81f', 
     appName: 'metaHypem'
   });
 
-/*Let us setup all our databases and configurations
-that are specific to development or production settings.
-These shoudl go at the start so all setup can initialize any database
-connections we need as early as possible
-*/
-var Config = require('config');
+var AM = require('accountManager/accountManager')
+  , routes = require('./routes/configure_routes')
+  , hypemParser = require('hypemParser/hypemscraper')
+  
+  /*Let us setup all our databases and configurations
+  that are specific to development or production settings.
+  These shoudl go at the start so all setup can initialize any database
+  connections we need as early as possible
+  */
+  , Config = require('config');
 
-var AM = require('accountManager/accountManager');
 AM.setup(Config.AM);
-var hypemParser = require('hypemParser/hypemscraper')
 hypemParser.setup(Config.Cache);
 
 
 var express = require('express')
-  , routes = {
-    index: require('./routes/index').index,
-    popular: require('./routes/index').popular,
-    latest: require('./routes/index').latest,
-    about: require('./routes/index').about,
-    download: require('./routes/index').download,
-    search: require('./routes/index').search,
-    not_found: require('./routes/index').not_found,
-     
-  }
-  , user = require('./routes/user')
+  , routes = require('./routes/configure_routes')
   , http = require('http')
   , path = require('path')
   , mongoose = require('mongoose')
@@ -58,7 +50,6 @@ app.configure(function(){
   app.set('port', process.env.PORT || 3000);
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
-
   app.use(express.static(__dirname + '/public'));
   app.use(express.favicon());
   app.use(express.logger('dev'));
@@ -84,17 +75,7 @@ app.configure('production', function(){
 });
 
 
-app.get('/', routes.index);
-app.get('/home', routes.index);
-app.get('/popular/:page?', routes.popular);
-app.get('/latest/:page?', routes.latest);
-
-app.get('/about', routes.about);
-app.get('/search', routes.search);
-app.get('/download/:id', routes.download);
-
 /* Account Management and Passport Settings start Here */
-
 // Define local strategy for Passport
 // usernameField is how we tell it what input type name to look for
 passport.use(new LocalStrategy({
@@ -126,13 +107,6 @@ passport.deserializeUser(function(id, done) {
   });
 });
 
-app.get('/account', ensureAuthenticated, user.account);
-
-app.get('/signup', user.signup);
-app.post('/signup', user.signup_post);
-
-app.get('/login', user.login);
-
 //Setting the failureFlash option to true instructs Passport to flash an error message using the message given by the strategy's verify callback,
 app.post('/login', 
   passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }),
@@ -147,19 +121,8 @@ app.get('/logout', function(req, res){
   res.redirect('/');
 });
 
-app.get('*', routes.not_found);
+routes.attach_routes(app);
 
-
-// Simple route middleware to ensure user is authenticated.
-//   Use this route middleware on any resource that needs to be protected.  If
-//   the request is authenticated (typically via a persistent login session),
-//   the request will proceed.  Otherwise, the user will be redirected to the
-//   login page.
-function ensureAuthenticated(req, res, next) {
-  console.log("checking authentication");
-  if (req.isAuthenticated()) { return next(); }
-  res.redirect('/login')
-}
 
 
 server.listen(app.get('port'), function(){

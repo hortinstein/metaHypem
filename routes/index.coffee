@@ -92,8 +92,12 @@ about = (req, res) ->
       id: 'about'
       title: 'About'
       downloads: num_downloads
-    console.log num_downloads
     res.render 'about', options
+not_found = (req, res) ->
+    options =
+      id: 'not_found'
+      title: 'Not found...'
+    res.render 'not_found', options
 
 download = (req, res) ->
   song_id = req.params.id
@@ -126,3 +130,4 @@ exports.search = search
 
 exports.about = about
 exports.download = download
+exports.not_found = not_found

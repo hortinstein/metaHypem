@@ -27,7 +27,9 @@ var express = require('express')
     latest: require('./routes/index').latest,
     about: require('./routes/index').about,
     download: require('./routes/index').download,
-    search: require('./routes/index').search
+    search: require('./routes/index').search,
+    not_found: require('./routes/index').not_found,
+     
   }
   , user = require('./routes/user')
   , http = require('http')
@@ -56,6 +58,8 @@ app.configure(function(){
   app.set('port', process.env.PORT || 3000);
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
+
+  app.use(express.static(__dirname + '/public'));
   app.use(express.favicon());
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
@@ -137,12 +141,14 @@ app.post('/login',
     res.redirect('/');
   });
 
-
 app.get('/logout', function(req, res){
   req.flash("success", " Logged out of account " + req.user.username)
   req.logout();
   res.redirect('/');
 });
+
+app.get('*', routes.not_found);
+
 
 // Simple route middleware to ensure user is authenticated.
 //   Use this route middleware on any resource that needs to be protected.  If

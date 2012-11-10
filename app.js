@@ -7,29 +7,32 @@ require('nodetime').profile({
     appName: 'metaHypem'
   });
 
-var AM = require('accountManager/accountManager')
-  , routes = require('./routes/configure_routes')
-  , hypemParser = require('hypemParser/hypemscraper')
-  
-  /*Let us setup all our databases and configurations
-  that are specific to development or production settings.
-  These shoudl go at the start so all setup can initialize any database
-  connections we need as early as possible
-  */
-  , Config = require('config');
-
-AM.setup(Config.AM);
-hypemParser.setup(Config.Cache);
-
-
 var express = require('express')
-  , routes = require('./routes/configure_routes')
+  , AM = require('accountManager/accountManager')
+  , routes = require('./routes/routes')
+  , hypemParser = require('hypemParser/hypemscraper')
+  , Config = require('config')
   , http = require('http')
   , path = require('path')
   , mongoose = require('mongoose')
   , passport = require('passport')
   , flash = require('connect-flash')
-  , LocalStrategy = require('passport-local').Strategy;
+  , LocalStrategy = require('passport-local').Strategy
+  //http://www.hacksparrow.com/use-redisstore-instead-of-memorystore-express-js-in-production.html
+  , RedisStore = require('connect-redis')(express);
+
+/*Let us setup all our databases and configurations
+that are specific to development or production settings.
+These shoudl go at the start so all setup can initialize any database
+connections we need as early as possible
+*/
+AM.setup(Config.AM);
+//buildDB will try and create the database if it hasn't been done already
+AM.buildDB( function(err) {
+  console.log("Building DB...", err);
+});
+
+hypemParser.setup(Config.Cache);
 
 var app = express();
 var server = http.createServer(app);
@@ -56,7 +59,10 @@ app.configure(function(){
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(express.cookieParser('your secret here'));
-  app.use(express.session());
+  //app.use(express.session());
+  //In production environments we shouldn't be using the basic express.session management but rather Redis one.
+  //This configuration assumes localhost redis client.
+  app.use(express.session({ store: new RedisStore, secret: 'meandalexaremakingsuchacoolsite' }));
   app.use(flash());
   app.use(expose_flash);
   app.use(passport.initialize());
@@ -71,7 +77,6 @@ app.configure('development', function(){
   app.use(express.errorHandler({showStack: true, dumpExceptions: true}));
 });
 app.configure('production', function(){
-  app.use(express.errorHandler());
 });
 
 
@@ -123,6 +128,49 @@ app.get('/logout', function(req, res){
 
 routes.attach_routes(app);
 
+//The following was taken from http://veebdev.wordpress.com/2012/03/27/expressive-way-to-handle-errors-in-expressjs/
+// It is the "expressive.js way to handle errors."
+// These will only show up on production environment.
+app.use(function(err, req, res, next){
+  if (err instanceof NotFound) {
+    res.render('404', { title: 'Not found 404', error: err });
+  } else {
+    res.render('500', { title: 'Error', error: err });
+  }
+});
+
+app.get('/404', function(req, res, next){
+  // trigger a 404 since no other middleware
+  // will match /404 after this one, and we're not
+  // responding here
+  next();
+});
+
+app.get('/403', function(req, res, next){
+  // trigger a 403 error
+  var err = new Error('not allowed!');
+  err.status = 403;
+  next(err);
+});
+
+app.get('/500', function(req, res, next){
+  // trigger a generic (500) error
+  next(new Error('keyboard cat!'));
+});
+
+/* Since this is the last non-error-handling
+ middleware use()d, we assume 404, as nothing else
+ responded.
+ */
+app.get('/*', function(req, res){
+    throw new NotFound;
+});
+
+function NotFound(msg){
+    this.name = 'NotFound';
+    Error.call(this, msg);
+    Error.captureStackTrace(this, arguments.callee);
+}
 
 
 server.listen(app.get('port'), function(){

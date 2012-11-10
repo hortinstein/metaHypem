@@ -26,22 +26,26 @@ html
       //http://twitter.github.com/bootstrap/examples/marketing-narrow.html
       .container-narrow
         .masthead
-          ul.nav.nav-pills.pull-right
-            - var obj = { 'home': 'Home', 'about': 'About' }
-            - if (user)
-              - obj['account'] = user.hypem_username
-              - obj['logout'] = 'Logout'
-            - else
-              - obj['login'] = 'Login'
-
-            - each val, key in obj
-              - if (id == key)
-                li.active
-                   a(href='/#{key}') #{val}
+          block navigation
+            ul.nav.nav-pills.pull-right
+              - var obj = { 'home': 'Home', 'about': 'About' }
+              - if (user)
+                - obj['account'] = user.hypem_username
+                - obj['logout'] = 'Logout'
               - else
-                li
-                  a(href='/#{key}') #{val}
-          h3.muted metahypem
+                - obj['login'] = 'Login'
+
+              - each val, key in obj
+                - if (id == key)
+                  li.active
+                     a(href='/#{key}') #{val}
+                - else
+                  li
+                    a(href='/#{key}') #{val}
+
+          block title
+            h3.muted
+              a.muted(href='/', style="text-decoration:none;") metahypem
 
           img(style="position: absolute; top: 0; right: 0; border: 0;" , src="/images/beta_banner.png")
         

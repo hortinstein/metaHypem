@@ -20,7 +20,8 @@
     "bcrypt": "~0.7.2",
     "nodetime": "0.4.x",
     "redis": "~0.8.2",
-    "config": "~0.4.17"
+    "config": "~0.4.17",
+    "connect-redis": "~1.4.5"
   },
   "subdomain": "metaHypem",
   "engines": {

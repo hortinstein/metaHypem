@@ -26,10 +26,10 @@ that are specific to development or production settings.
 These shoudl go at the start so all setup can initialize any database
 connections we need as early as possible
 */
-AM.setup(Config.AM);
-//buildDB will try and create the database if it hasn't been done already
-AM.buildDB( function(err) {
-  console.log("Building DB...", err);
+AM.setup(Config.AM, function(err) {
+  if (err){
+    console.log("Error building/setting up DB...", err);
+  }
 });
 
 hypemParser.setup(Config.Cache);
@@ -108,7 +108,13 @@ passport.serializeUser(function(user, done) {
 
 passport.deserializeUser(function(id, done) {
   AM.getByEmail(id, function (err, user) {
-    done(err, user);
+    if (err) {
+      //We have a problem finding the user, so invalidate the existing login session.
+      done(null, false, { message: err } );
+    }
+    else{
+      done(null, user);
+    }
   });
 });
 

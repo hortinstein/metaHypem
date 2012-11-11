@@ -1,5 +1,16 @@
 extends ../base
 
+block heading
+  - var tabs = { 'account' : 'Your Hypem Loved Songs', 'playlist' : 'Playlist' }
+  ul.nav.nav-tabs
+    - each val, key in tabs
+      - if (tab == key)
+        li.active
+          a(href-'/#{key}') #{val}
+      - else 
+        li
+          a(href='/#{key}') #{val}
+
 block content
   .row-fluid
     .span12

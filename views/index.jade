@@ -24,11 +24,45 @@ block content
                   .span6.accordion-toggle(data-toggle="collapse", data-target="##{song.id}")
                     // this link doesn't really go anywhere. It's just to give the appearance and help inform the user that the accordion expands
                     a=song.title
-                  .span5.accordion-toggle(data-toggle="collapse", data-target="##{song.id}")
+                  .span4.accordion-toggle(data-toggle="collapse", data-target="##{song.id}")
                     p=song.artist
                   .span1.heading-button
                     a.btn.pull-right.song-download(rel="tooltip",title="Download!",data-placement="top", data-delay=500, href="/download/#{song.id}")
                       i.icon-download-alt
+                  if (user)
+                    .toggle-button
+                      input(type='checkbox', id='chk#{song.id}', name='#{song.id}')
+                      script
+                        $(document).ready(function(){
+                          $('#chk#{song.id}').change(function  () {
+                            console.log($(":checked"));
+                            if ($(":checked")){
+                              $.ajax({
+                                url: '/add_to_playlist',
+                                type: 'POST',
+                              data: { songid: '#{song.id}' },
+                              complete: function  () {
+                                console.log('request complete') 
+                              },
+                              success: function  () {
+                                console.log('song added') 
+                              },
+                              error: function  () {
+                                console.log('add failed') 
+                              }
+                              });
+                              console.log("checked")
+                            }
+                            else {
+                             $.ajax({
+                                url: '/remove_from_playlist',
+                                type: 'POST',
+                              data: { songid: $.attr('name') }
+                              });
+                              console.log("unchecked");
+                            }
+                          });
+                         }); 
               .accordion-body.collapse(id=song.id)
                 .accordion-inner
                   p

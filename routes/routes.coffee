@@ -14,6 +14,8 @@ attach_routes = (app) ->
   app.get('/signup', user.signup)
   app.post('/signup', user.signup_post)
   app.get('/login', user.login)
+  app.post('/add_to_playlist', user.add_to_playlist)
+  app.get('/playlist', user.playlist)
 
 # Simple route middleware to ensure user is authenticated.
 #   Use this route middleware on any resource that needs to be protected.  If

@@ -1,0 +1,27 @@
+extends account
+
+block content
+  .row-fluid
+    .span12
+      p #{user.hypem_username} playlist!
+      - if (songs.length > 0 )
+        table.table.table-striped
+          thead
+            tr 
+              th #
+              th Title
+              th Artist
+              th Download
+              th Details
+          tbody
+            each song, i in songs
+              tr
+                td #{i}
+                td #{song.title}
+                td #{song.artist}
+                td 
+                  a.btn(href="download/#{song.id}")
+                    i.icon-download-alt
+                td 
+                  a(href='song/#{song.id}') View
+

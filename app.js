@@ -1,12 +1,5 @@
 require('coffee-script');
 
-
-//metrics trial
-require('nodetime').profile({
-    accountKey: '3a92a49d862b1674e0d0d0582b382dae1a21a81f', 
-    appName: 'metaHypem'
-  });
-
 var express = require('express')
   , AM = require('accountManager/accountManager')
   , routes = require('./routes/routes')

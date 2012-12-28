@@ -8,7 +8,7 @@ attach_routes = (app) ->
   app.get('/latest/:page?', metahypem.latest)
 
   app.get('/about', metahypem.about)
-  app.get('/search', metahypem.search)
+  app.get('/search/:page?', metahypem.search)
   app.get('/download/:id', metahypem.download)
   app.get('/account/:page?', ensureAuthenticated, user.account)
   app.get('/signup', user.signup)

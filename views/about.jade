@@ -5,23 +5,32 @@ block search
 block content
   .row-fluid
     .span6
-      if downloads
-        h3 We've served #{downloads} songs!
-      p 
-        | Welcome to our site. This is a work in progress by 
-        a(href="https://github.com/hortinstein") Alex Hortin
-        |  and 
-        a(href="http://fzakaria.com") Farid Zakaria
-        | .
-      
-      p 
-        | The goal of the site is to try and provide you with the best experience possible in retrieving songs from a great music 
-        a(href="http://hypem.com") blogger aggregator
-        | .
 
+      .row-fluid
+        .span12
+        if downloads
+          h3 We've served #{downloads} songs!
+        p 
+          | Welcome to our site. This is a work in progress by 
+          a(href="https://github.com/hortinstein") Alex Hortin
+          |  and 
+          a(href="http://fzakaria.com") Farid Zakaria
+          | .
+        
+        p 
+          | The goal of the site is to try and provide you with the best experience possible in retrieving songs from a great music 
+          a(href="http://hypem.com") blogger aggregator
+          | .
+
+      .row-fluid
+        .span12
+          h3 Changelog
+          ul
+            li 28/12/2012 - You can now search for a specific url (i.e. http://hypem.com/artist/Noosa )
+            li 27/12/2012 - Added an Expire time for each song record (currently 1 hour). This is incase HypeMachine updates the download URL.
+            li 27/12/2012 - Generic Bug Fixing for cases where no songs are returned from HypeMachine
 
     .span6
-      
       .row-fluid
         .span12
           h3 Powered By 

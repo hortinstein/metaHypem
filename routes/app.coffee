@@ -3,7 +3,9 @@ http = require('http')
 fs = require('fs')
 request = require('request')
 redis = require('redis')
-Config = require('config');
+Config = require('config')
+check = require('validator').check
+
 redis_client = redis.createClient(Config.Cache.port, Config.Cache.host)
 
 
@@ -74,16 +76,31 @@ search = (req, res) ->
     return
 
   query = req.query.query
-  #At this point we have a valid query so lets return some tracks!
-  hypem_parser.search query, (valid_tracks)->
-    options =
-      id: 'home'
-      tab: 'search'
-      title: 'Look for songs!'
-      songs: valid_tracks
-      page: page
 
-    res.render 'search', options
+  try
+    check(query).isUrl()
+    #At this point they are trying to search for a specific url. Look for that!
+    hypem_parser.scrape query, (valid_tracks)->
+      options =
+        id: 'home'
+        tab: 'search'
+        title: 'Look for songs!'
+        songs: valid_tracks
+        page: page
+
+      res.render 'search', options
+  catch error
+    #At this point we have a valid query so lets return some tracks!
+    hypem_parser.search query, (valid_tracks)->
+      options =
+        id: 'home'
+        tab: 'search'
+        title: 'Look for songs!'
+        songs: valid_tracks
+        page: page
+
+      res.render 'search', options
+
 
 about = (req, res) ->
   redis_client.get "global_downloads", (e,num_downloads) ->  
